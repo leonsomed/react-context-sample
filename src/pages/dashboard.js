@@ -1,6 +1,9 @@
 import React from 'react';
 import { OwnersContext } from '../context/owners';
+import { AuthContext } from '../context/auth';
 import { withContext } from '../context';
+import flowRight from 'lodash/flowRight';
+import { withRouter } from 'react-router-dom';
 
 const Page = (props) => {
     const {
@@ -25,4 +28,8 @@ const Page = (props) => {
     );
 }
 
-export default withContext(OwnersContext)(Page);
+export default flowRight([
+    withContext(AuthContext),
+    withContext(OwnersContext),
+    withRouter,
+])(Page);
