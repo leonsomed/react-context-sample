@@ -1,12 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import { BrowserRouter, Switch, Redirect } from 'react-router-dom';
+import GuardRoute from './guardRoute';
+import Dashboard from './pages/dashboard';
+import Login from './pages/login';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const root = (
+    <BrowserRouter>
+        <Switch>
+            <GuardRoute type="protected" path="/dashboard" component={Dashboard} />
+            <GuardRoute type="public" path="/login" component={Login} />
+            <Redirect from="/" to="/dashboard" />
+        </Switch>
+    </BrowserRouter>
+);
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
-serviceWorker.unregister();
+ReactDOM.render(root, document.getElementById('root'));
