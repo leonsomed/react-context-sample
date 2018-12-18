@@ -1,31 +1,28 @@
 import React from 'react';
-import { AccessContext } from '../context/access';
+import { OwnersContext } from '../context/owners';
+import { withContext } from '../context';
 
-class Page extends React.Component {
-    render() {
-        const {
-            owners,
-            createOwner,
-        } = this.context;
+const Page = (props) => {
+    const {
+        owners,
+        createOwner,
+    } = props;
 
-        return (
-            <div>
-                <h1>Dashboard</h1>
-                <button
-                    onClick={createOwner}
-                >
-                    create
-                </button>
-                <ul>
-                    {owners.map(n =>
-                        <li key={n.name}>{n.email}</li>
-                    )}
-                </ul>
-            </div>
-        );
-    }
+    return (
+        <div>
+            <h1>Dashboard</h1>
+            <button
+                onClick={createOwner}
+            >
+                create
+            </button>
+            <ul>
+                {owners.map(n =>
+                    <li key={n.id}>{n.email}</li>
+                )}
+            </ul>
+        </div>
+    );
 }
 
-Page.contextType = AccessContext;
-
-export default Page;
+export default withContext(OwnersContext)(Page);

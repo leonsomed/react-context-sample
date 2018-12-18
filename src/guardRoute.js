@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { AccessContextProvider } from './context/access';
-import { NoAccessContextProvider, NoAccessContextConsumer } from './context/noaccess';
+import { OwnersContextProvider } from './context/owners';
+import { AuthContextProvider, AuthContextConsumer } from './context/auth';
 
 export const PROTECTED = 'protected';
 
@@ -21,13 +21,13 @@ const GuardRoute = (props) => {
                 let Provider;
 
                 return (
-                    <NoAccessContextProvider>
-                        <NoAccessContextConsumer>
+                    <AuthContextProvider>
+                        <AuthContextConsumer>
                             {value => {
                                 if (type === PROTECTED) {
                                     allow = value.isLoggedIn;
                                     to = '/login';
-                                    Provider = AccessContextProvider;
+                                    Provider = OwnersContextProvider;
                                 } else {
                                     allow = !value.isLoggedIn;
                                     to = '/dashboard';
@@ -44,8 +44,8 @@ const GuardRoute = (props) => {
                                     </Provider>
                                 );
                             }}
-                        </NoAccessContextConsumer>
-                    </NoAccessContextProvider>
+                        </AuthContextConsumer>
+                    </AuthContextProvider>
                 );
             }}
         />
